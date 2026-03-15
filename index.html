@@ -282,18 +282,21 @@ nav.scrolled { border-bottom-color: var(--line); }
 }
 .video-card:hover { border-color: var(--accent); }
 
-/* Colossyan embed wrapper — 16:9 responsive */
+/* Colossyan embed — forces any pasted iframe to be fully responsive */
 .video-embed {
   position: relative; width: 100%; padding-bottom: 56.25%;
-  background: #E4EBF5;
+  background: #E4EBF5; overflow: hidden;
 }
+/* Override fixed width/height that Colossyan sets on the iframe */
 .video-embed iframe {
-  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
 }
-
-/* Placeholder shown when no real ID is set */
 .video-placeholder {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; pointer-events: none;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 12px;
 }
@@ -586,54 +589,51 @@ body.lang-switching [data-i18n] { opacity: 0; }
       <div class="videos-grid">
 
         <!--
-        ╔══════════════════════════════════════════╗
-        ║  HOW TO EMBED A COLOSSYAN VIDEO          ║
-        ║  1. In Colossyan → Share → Embed         ║
-        ║  2. Copy the Share/Embed URL or ID       ║
-        ║  3. Replace COLOSSYAN_EMBED_URL below    ║
-        ║     with the full embed src URL          ║
-        ║  Example src:                            ║
-        ║  https://share.colossyan.com/v/YOUR_ID   ║
-        ╚══════════════════════════════════════════╝
+        ╔═══════════════════════════════════════════════════════════╗
+        ║  VIDEO HINZUFÜGEN — SO GEHT'S                            ║
+        ║                                                           ║
+        ║  1. In Colossyan: Teilen → Einbetten                     ║
+        ║     → den kompletten <iframe ...> Code kopieren          ║
+        ║                                                           ║
+        ║  2. Unten ein video-card Block kopieren                  ║
+        ║                                                           ║
+        ║  3. Den kopierten <iframe>-Code zwischen                 ║
+        ║     <!-- IFRAME START --> und <!-- IFRAME END -->        ║
+        ║     einfügen (alten Platzhalter ersetzen)                ║
+        ║                                                           ║
+        ║  4. Titel und Untertitel im video-info Block anpassen    ║
+        ║                                                           ║
+        ║  Beispiel Colossyan-Code:                                ║
+        ║  <iframe src="https://app.colossyan.com/embed/ID"        ║
+        ║    width="560" height="315" frameborder="0"              ║
+        ║    allow="autoplay; fullscreen; picture-in-picture"      ║
+        ║    allowfullscreen></iframe>                             ║
+        ╚═══════════════════════════════════════════════════════════╝
         -->
 
+        <!-- ═══ VIDEO 1 ═══ -->
         <div class="video-card">
           <div class="video-embed">
-            <!-- Replace COLOSSYAN_EMBED_URL_1 with your Colossyan embed link -->
-            <iframe
-              src="<iframe src="https://app.colossyan.com/embed/3ea28b43-b4d9-4533-958e-3e73762cf010" width="560" height="315" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>"
-              title="Video 1"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen"
-              allowfullscreen loading="lazy"
-              id="colossyan-1">
-            </iframe>
-            <!-- Placeholder shown until real URL is set -->
-            <div class="video-placeholder" id="ph-1">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-              <span data-i18n="video.placeholder">Colossyan-URL eintragen</span>
-            </div>
+            <!-- IFRAME START — Colossyan <iframe> Code hier einfügen -->
+            <iframe src="https://app.colossyan.com/embed/3ea28b43-b4d9-4533-958e-3e73762cf010" width="560" height="315" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <!-- IFRAME END -->
           </div>
           <div class="video-info">
-            <div class="video-title" data-i18n="v1.title">Einführung in verteilte Systeme</div>
-            <div class="video-sub"   data-i18n="v1.sub">Vorlesung · Woche 1 · März 2026</div>
+            <div class="video-title">Einführung in verteilte Systeme</div>
+            <div class="video-sub">Vorlesung · Woche 1 · März 2026</div>
             <div class="video-brand">Colossyan</div>
           </div>
         </div>
 
+        <!-- ═══ VIDEO 2 ═══ -->
         <div class="video-card">
           <div class="video-embed">
-            <!-- Replace COLOSSYAN_EMBED_URL_2 with your Colossyan embed link -->
-            <iframe
-              src="COLOSSYAN_EMBED_URL_2"
-              title="Video 2"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen"
-              allowfullscreen loading="lazy"
-              id="colossyan-2">
-            </iframe>
-            <div class="video-placeholder" id="ph-2">
+            <!-- IFRAME START — Colossyan <iframe> Code hier einfügen -->
+            <div class="video-placeholder">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-              <span data-i18n="video.placeholder">Colossyan-URL eintragen</span>
+              <span data-i18n="video.placeholder">Embed-Code einfügen</span>
             </div>
+            <!-- IFRAME END -->
           </div>
           <div class="video-info">
             <div class="video-title" data-i18n="v2.title">CAP-Theorem — vertieft</div>
@@ -646,7 +646,7 @@ body.lang-switching [data-i18n] { opacity: 0; }
 
       <div class="admin-hint">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
-        <p data-i18n="hint.videos">Neues Video: video-card Block kopieren → COLOSSYAN_EMBED_URL durch den Colossyan-Embed-Link ersetzen (Colossyan → Teilen → Einbetten → URL kopieren) → Titel &amp; Untertitel anpassen → speichern.</p>
+        <p data-i18n="hint.videos">Neues Video: video-card Block kopieren → den vollständigen Colossyan &lt;iframe&gt;-Code zwischen IFRAME START und IFRAME END einfügen → Titel &amp; Untertitel anpassen → speichern.</p>
       </div>
     </div>
   </div>
@@ -776,7 +776,7 @@ const T = {
     'v1.title':'Introduction to Distributed Systems','v1.sub':'Lecture · Week 1 · March 2026',
     'v2.title':'CAP Theorem — In Depth','v2.sub':'Lecture · Week 3 · March 2026',
     'hint.tasks':'To add a task: copy a task-card block → update the title, description, date and badge → save the file.',
-    'hint.videos':'To add a video: copy a video-card block → replace COLOSSYAN_EMBED_URL with your Colossyan embed link (Colossyan → Share → Embed → copy URL) → update title & subtitle → save.',
+    'hint.videos':'To add a video: copy a video-card block → paste the full Colossyan &lt;iframe&gt; embed code between IFRAME START and IFRAME END → update title &amp; subtitle → save.',
     'about.eyebrow':'03 — About','about.t1':'Background &','about.t2':'Expertise',
     'about.b1':'I lead an IT infrastructure and engineering team while serving as a university lecturer in Computer Science. My work sits at the intersection of <strong>technical excellence and knowledge transfer</strong> — keeping complex systems running and making them understandable.',
     'about.b2':'With over a decade in enterprise IT, I have built and scaled teams, defined architecture standards, and made the hard topics accessible in lecture halls.',
@@ -813,22 +813,9 @@ function doApply(l) {
     b.classList.toggle('active', b.textContent.trim().toLowerCase() === l);
   });
   document.body.classList.remove('lang-switching');
-  hidePlaceholders();
 }
 
 function setLang(l) { applyLang(l, true); }
-
-/* Hide placeholder divs when a real Colossyan src is set */
-function hidePlaceholders() {
-  ['colossyan-1','colossyan-2'].forEach((id, i) => {
-    const iframe = document.getElementById(id);
-    const ph = document.getElementById('ph-' + (i+1));
-    if (iframe && ph) {
-      const src = iframe.getAttribute('src') || '';
-      ph.style.display = src.startsWith('http') ? 'none' : 'flex';
-    }
-  });
-}
 
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(b => {
@@ -882,4 +869,3 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 </body>
 </html>
-
